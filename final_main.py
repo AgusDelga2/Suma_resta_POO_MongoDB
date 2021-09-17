@@ -7,13 +7,14 @@ import pandas as pd
 class Main:
     def __init__(self):
         #Creamos el array
-        self.array = np.arange(22).reshape(2, 11)
+        self.array = np.array([[0,1,2,3,4,5,6,7,8,9,10],[0,1,2,3,4,5,6,7,8,9,10]])
         print(self.array)
            
     def a_dataframe(self): #Creamos Dataframe a partir del array
-        dataframe = pd.DataFrame(self.array, columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'h'])
+        dataframe = pd.DataFrame(self.array)
         return dataframe
-
+    
+    
 #Pruebas
 l = Main()
 print(l.a_dataframe())
