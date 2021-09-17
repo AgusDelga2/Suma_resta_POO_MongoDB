@@ -4,7 +4,10 @@ import suma_resta as sr
 import numpy as np
 import pandas as pd
 
-class Main:
+if __name__ == '__main__':
+    print('Principal se está ejecutando')
+    
+class Principal:
     def __init__(self):
         #Creamos el array
         self.array = np.array([[0,1,2,3,4,5,6,7,8,9,10],[0,1,2,3,4,5,6,7,8,9,10]])
@@ -16,7 +19,7 @@ class Main:
     
     
 #Pruebas
-l = Main()
+l = Principal()
 print(l.a_dataframe())
 
 h = sr.Resta(9, 6)

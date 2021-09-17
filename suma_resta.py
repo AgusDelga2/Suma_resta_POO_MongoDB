@@ -28,6 +28,6 @@ class Resta (Suma):
         self.total = self.num1 - self.num2
         return self.total
     
-l = Resta(9, 4)
+'''l = Resta(9, 4)
 l._resta()
-l.imprimir()
+l.imprimir()'''
