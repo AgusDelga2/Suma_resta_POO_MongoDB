@@ -1,11 +1,15 @@
 #Importamos las clsases suma y resta
-import suma as s
-import resta as r
+from suma import Suma
+from resta import Resta
 #Importamos NumPy y Pandas
 import numpy as np
 import pandas as pd
+from pymongo import MongoClient # import mongo client to connect  
+
+        
+
+class Principal(Suma):
     
-class Principal(s.Suma):
     def __init__(self, array):
         #Creamos el array
         self.array = np.array(array)
@@ -25,13 +29,16 @@ class Principal(s.Suma):
             x = int(self.df.iloc[i,0])
             y = int(self.df.iloc[i,1])
             #Herencia con Suma
-            inst_suma = s.Suma.__init__(self, x, y)
-            suma = s.Suma._suma(self)
+            #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            #INTENTANDO APLICAR HERENCIA: suma= self._suma(x, y), TypeError: _suma() takes 1 positional argument but 3 were given
+            #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            inst_suma = Suma.__init__(self, x, y)
+            suma = Suma._suma(self)
             #Se agrega al df
             self.df.iloc[i,2] = suma
             
             #Relación de composicón con resta
-            inst_resta = r.Resta(x, y)
+            inst_resta = Resta(x, y)
             resta = inst_resta._resta()
             #Se Agrega al df
             self.df.iloc[i,3] = resta
@@ -41,15 +48,30 @@ class Principal(s.Suma):
     def imprimirDF(self):
         print('Pandas DF resultante de las operaciones:')
         print(self.df)
-    
+        
+    def to_mongo(self):
+        # Instancia de mongoclient
+        client = MongoClient('localhost')  
+        print(1)
+        # Creando database
+        db = client['finaldb']
+        #Creando documento
+        col = db['suma_resta_mongo']
+        #Insertamos el pandas df en el documento
+        db.suma_resta.insert(self.df)
+        #Print coleccion
+        print(db.suma_resta_mongo.find())
+        
 if __name__ == '__main__':
     print('Principal se está ejecutando')
     
     arr = [[45, 6, 8], [4, 7, 3]]
-    l = Principal(arr)
-    l.a_dataframe()
-    l.suma_resta()
-    l.imprimirDF()
+    tabla = Principal(arr)
+    tabla1 = tabla.a_dataframe()
+    print(tabla1)
+    tabla.suma_resta()
+    tabla.imprimirDF()
+    #tabla.to_mongo()
 
 #------------------------ANOTACIONES------------------------------ANOTACIONES-----------------------------ANOTACIONES--------------------------
 '''
@@ -60,3 +82,6 @@ llamar al metodo de resta desde el objeto que se creó fuera de la clase.
  En un principio pense que no se podria porque el array es una variable local, pero luego vi que no es asi ya que es un
 atributo de Principal y si se puede acceder a ella (a diferencia de las variables locales), pero de todas formas sigue sin ser la mejor opcion.
 '''
+
+'''tabla_dict = tabla1.to_dict()
+print (tabla_dict)'''

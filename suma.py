@@ -6,9 +6,7 @@ class Suma:
         self.num2 = num2
         #Corroboramos que sean parámetros aptos
         if (type(num1) != int) or (type(num2) != int):
-            print('Parametros no validos')
-            self.num1 = int(input('Ingrese primer numero: '))
-            self.num2 = int(input('Ingrese segundo numero: '))
+            print('Parametros no validos, por favor ingrese números')
         
         else:
             pass
