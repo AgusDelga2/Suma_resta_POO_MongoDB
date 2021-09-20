@@ -1,20 +1,13 @@
 
 class Suma:
-    def __init__(self, num1, num2):
+    def __init__(self):
         #Atributos de la suma
-        self.num1 = num1
-        self.num2 = num2
-        #Corroboramos que sean parámetros aptos
-        if (type(num1) != int) or (type(num2) != int):
-            print('Parametros no validos, por favor ingrese números')
-        
-        else:
-            pass
-    
+        self.total = self._suma()
+
     #Metodo privado que retorna la suma
     def _suma(self):
-        self.total = self.num1 + self.num2
-        return self.total
+        total = self.num1 + self.num2
+        return total
     
    #Metodo para imprimir 
     def imprimirSuma(self):

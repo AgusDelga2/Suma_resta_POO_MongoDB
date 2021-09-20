@@ -13,7 +13,8 @@ class Principal(Suma):
     def __init__(self, array):
         #Creamos el array
         self.array = np.array(array)
-        
+        self.num1 = 1
+        self.num2 = 2
         
     def a_dataframe(self): #Creamos Dataframe a partir del array
         df = pd.DataFrame(self.array)
@@ -25,20 +26,17 @@ class Principal(Suma):
         return self.df
     
     def suma_resta(self):
+        Suma.__init__(self)
+        
         for i in range(len(self.df)):
-            x = int(self.df.iloc[i,0])
-            y = int(self.df.iloc[i,1])
-            #Herencia con Suma
-            #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            #INTENTANDO APLICAR HERENCIA: suma= self._suma(x, y), TypeError: _suma() takes 1 positional argument but 3 were given
-            #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            inst_suma = Suma.__init__(self, x, y)
-            suma = Suma._suma(self)
+            self.num1 = int(self.df.iloc[i,0])
+            self.num2 = int(self.df.iloc[i,1])
+            suma = self._suma()
             #Se agrega al df
             self.df.iloc[i,2] = suma
             
             #Relación de composicón con resta
-            inst_resta = Resta(x, y)
+            inst_resta = Resta(self.num1, self.num2)
             resta = inst_resta._resta()
             #Se Agrega al df
             self.df.iloc[i,3] = resta
@@ -52,13 +50,12 @@ class Principal(Suma):
     def to_mongo(self):
         # Instancia de mongoclient
         client = MongoClient('localhost')  
-        print(1)
         # Creando database
         db = client['finaldb']
         #Creando documento
         col = db['suma_resta_mongo']
         #Insertamos el pandas df en el documento
-        db.suma_resta.insert(self.df)
+        db.suma_resta_mongo.insert(self.df)
         #Print coleccion
         print(db.suma_resta_mongo.find())
         
